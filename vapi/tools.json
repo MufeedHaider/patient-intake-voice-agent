@@ -1,0 +1,76 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "find_patient_by_phone",
+      "description": "Look up existing patients by phone number. Call this as soon as the caller gives their phone number, to detect returning patients.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "phone_number": {"type": "string", "description": "The caller's 10-digit U.S. phone number, digits only, e.g. 7325550123"}
+        },
+        "required": ["phone_number"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "register_patient",
+      "description": "Save a NEW patient record. Only call this after reading every field back to the caller and getting a clear yes.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "first_name": {"type": "string", "description": "Letters, hyphens and apostrophes only"},
+          "last_name": {"type": "string", "description": "Letters, hyphens and apostrophes only"},
+          "date_of_birth": {"type": "string", "description": "MM/DD/YYYY, not in the future"},
+          "sex": {"type": "string", "enum": ["Male", "Female", "Other", "Decline to Answer"]},
+          "phone_number": {"type": "string", "description": "10 digits, digits only"},
+          "email": {"type": "string", "description": "Optional email address"},
+          "address_line_1": {"type": "string", "description": "Street address"},
+          "address_line_2": {"type": "string", "description": "Optional apartment, suite or unit"},
+          "city": {"type": "string"},
+          "state": {"type": "string", "description": "Two-letter U.S. state abbreviation, e.g. NJ"},
+          "zip_code": {"type": "string", "description": "5 digits or ZIP+4, e.g. 08873 or 08873-1234"},
+          "insurance_provider": {"type": "string", "description": "Optional insurance company name"},
+          "insurance_member_id": {"type": "string", "description": "Optional alphanumeric member ID"},
+          "preferred_language": {"type": "string", "description": "Optional, defaults to English"},
+          "emergency_contact_name": {"type": "string", "description": "Optional full name"},
+          "emergency_contact_phone": {"type": "string", "description": "Optional 10-digit U.S. phone number"},
+          "force_new": {"type": "boolean", "description": "Set true only when the caller confirmed they are a different person from an existing record with the same phone number"}
+        },
+        "required": ["first_name", "last_name", "date_of_birth", "sex", "phone_number", "address_line_1", "city", "state", "zip_code"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "update_patient",
+      "description": "Update an EXISTING patient's record (returning caller). Send the patient_id from find_patient_by_phone and only the fields that changed, after the caller confirms the changes.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {"type": "string", "description": "patient_id returned by find_patient_by_phone"},
+          "first_name": {"type": "string"},
+          "last_name": {"type": "string"},
+          "date_of_birth": {"type": "string", "description": "MM/DD/YYYY"},
+          "sex": {"type": "string", "enum": ["Male", "Female", "Other", "Decline to Answer"]},
+          "phone_number": {"type": "string"},
+          "email": {"type": "string"},
+          "address_line_1": {"type": "string"},
+          "address_line_2": {"type": "string"},
+          "city": {"type": "string"},
+          "state": {"type": "string"},
+          "zip_code": {"type": "string"},
+          "insurance_provider": {"type": "string"},
+          "insurance_member_id": {"type": "string"},
+          "preferred_language": {"type": "string"},
+          "emergency_contact_name": {"type": "string"},
+          "emergency_contact_phone": {"type": "string"}
+        },
+        "required": ["patient_id"]
+      }
+    }
+  }
+]
