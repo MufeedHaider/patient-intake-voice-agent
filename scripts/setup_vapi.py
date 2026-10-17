@@ -33,7 +33,7 @@ def call(method: str, path: str, key: str, body: dict | None = None) -> dict:
         API + path,
         method=method,
         data=json.dumps(body).encode() if body is not None else None,
-        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json", "User-Agent": "Mozilla/5.0 (patient-intake-setup)"},
     )
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
