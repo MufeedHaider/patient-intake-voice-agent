@@ -124,7 +124,11 @@ def tool_register_patient(db: Session, args: dict, call_id: str | None) -> str:
             )
     patient = svc.create_patient(db, data, call_id=call_id)
     log.info("registration_payload %s", json.dumps(data.model_dump(mode="json")))
-    return f"SAVED: patient registered with patient_id={patient.patient_id}. Tell the caller they're all set, using their first name, then end the call."
+    return (
+        f"SAVED: patient registered with patient_id={patient.patient_id}. Now say exactly: "
+        f"\"You're all set, {patient.first_name}. Thanks for calling, and have a great day!\" "
+        "Only after you have said that sentence, use the endCall tool."
+    )
 
 
 def tool_update_patient(db: Session, args: dict, call_id: str | None) -> str:
@@ -143,7 +147,11 @@ def tool_update_patient(db: Session, args: dict, call_id: str | None) -> str:
     except svc.InvalidUpdate as exc:
         return f"NOT_SAVED: {exc}."
     log.info("update_payload patient_id=%s %s", patient_id, json.dumps(data.model_dump(mode="json", exclude_unset=True)))
-    return f"UPDATED: record for {patient.first_name} {patient.last_name} updated. Confirm to the caller and end the call."
+    return (
+        f"UPDATED: record for {patient.first_name} {patient.last_name} updated. Now say exactly: "
+        f"\"You're all set, {patient.first_name}. Your information has been updated. Thanks for calling!\" "
+        "Only after you have said that sentence, use the endCall tool."
+    )
 
 
 TOOLS = {
