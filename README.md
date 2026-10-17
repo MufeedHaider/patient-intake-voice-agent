@@ -1,6 +1,6 @@
 # Voice AI Patient Registration Agent
 
-Call a real U.S. phone number, talk naturally to **Riley**, an AI intake coordinator, and get registered as a new patient. Riley collects the standard U.S. demographic fields, reads everything back for confirmation, saves the record to PostgreSQL through the same service layer as the REST API, and recognises you by phone number when you call back.
+Call a real U.S. phone number, talk naturally to **Riley**, an AI intake coordinator, and get registered as a new patient. Riley collects the standard U.S. demographic fields, reads everything back for confirmation, saves the record to PostgreSQL through the same service layer as the REST API, and recognizes you by phone number when you call back.
 
 ## Live demo
 
@@ -92,12 +92,12 @@ All responses use the envelope `{"data": ..., "error": null}` or `{"data": null,
 Examples:
 
 ```bash
-curl https://<your-app>.onrender.com/patients?last\_name=doe
-curl -X POST https://<your-app>.onrender.com/patients -H "Content-Type: application/json" -d '{
+curl https://patient-intake-api-7v87.onrender.com/patients?last\_name=doe
+curl -X POST https://patient-intake-api-7v87.onrender.com/patients -H "Content-Type: application/json" -d '{
   "first\_name":"Ann","last\_name":"Lee","date\_of\_birth":"02/14/1992","sex":"Female",
   "phone\_number":"646-555-0188","address\_line\_1":"10 Main St","city":"Boston","state":"MA","zip\_code":"02108"}'
-curl -X PUT https://<your-app>.onrender.com/patients/<id> -H "Content-Type: application/json" -d '{"city":"Cambridge"}'
-curl -X DELETE https://<your-app>.onrender.com/patients/<id>
+curl -X PUT https://patient-intake-api-7v87.onrender.com/patients/<id> -H "Content-Type: application/json" -d '{"city":"Cambridge"}'
+curl -X DELETE https://patient-intake-api-7v87.onrender.com/patients/<id>
 ```
 
 Unknown fields are rejected, invalid values return 422 with one entry per bad field, and unexpected errors return 500 with the same envelope (details are logged, not returned).
@@ -159,7 +159,7 @@ python -m pytest                   # 27 tests
 3. Vapi: copy your private API key, then on your machine run:
 
 ```bash
-   VAPI\_API\_KEY=... SERVER\_URL=https://<your-app>.onrender.com python scripts/setup\_vapi.py
+   VAPI\_API\_KEY=... SERVER\_URL=https://patient-intake-api-7v87.onrender.com python scripts/setup\_vapi.py
    ```
 
    This creates the three tools and the assistant, pointed at `<SERVER\_URL>/vapi/webhook`.
